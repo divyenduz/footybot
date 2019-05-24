@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "outDir": "dist/",
+    "strict": false // TODO: Make this true
+  }
+}

@@ -1,0 +1,26 @@
+service: footyboy
+
+frameworkVersion: "=1.42.3"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+functions:
+  run:
+    handler: dist/cloud-cron.run
+    events:
+      - http: GET /run
+      - schedule: rate(5 minutes)
+  server:
+    handler: dist/server.index
+    events:
+      - http: GET /
+  callback:
+    handler: dist/server.callback
+    events:
+      - http: GET /callback
