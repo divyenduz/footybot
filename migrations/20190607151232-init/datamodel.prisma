@@ -3,12 +3,6 @@ model User {
   email: String? @unique # Meetup doesn't provide email. We need to provide user another way to do this
   meetup_id: String @unique # Using this to find uniques since email is not available
   groups: Group[]
-  token: Token[]
-}
-
-model Token {
-  id: Int @id
-  provider: Provider
   access_token: String?
   refresh_token: String?
 }

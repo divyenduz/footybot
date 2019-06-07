@@ -9,6 +9,7 @@ provider:
 plugins:
   - serverless-dotenv-plugin
   - serverless-offline
+  # - serverless-plugin-typescript
 
 functions:
   run:

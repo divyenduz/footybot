@@ -3,8 +3,10 @@ dotenv.config();
 
 import { getOAuthURL, getAccessToken, getUser } from "./meetup";
 import { sendMail } from "./mail";
-import { prisma } from "./generated/prisma-client";
+import { Photon } from "@generated/photon";
 import { DEFAULT_GROUPS } from "./constants";
+
+const photon = new Photon();
 
 module.exports.index = (event, ctx, callback) => {
   if (event.httpMethod === "GET") {
@@ -21,8 +23,12 @@ module.exports.index = (event, ctx, callback) => {
 };
 
 module.exports.callback = async (event, ctx, callback) => {
+  console.log("ZEBRA");
   if (event.httpMethod === "GET") {
     const { code, state } = event.queryStringParameters;
+
+    console.log({ code, state });
+
     if (state) {
       sendMail({ subject: "Meetup OAuth failed 🔥", body: `Status: ${state}` });
       callback(null, {
@@ -35,50 +41,73 @@ module.exports.callback = async (event, ctx, callback) => {
 
     const { access_token, refresh_token } = await getAccessToken({ code });
 
+    console.log({ access_token, refresh_token });
+
     // TODO: Handle the case when we fail to get remote user for whatever reason
     // curl "https://api.meetup.com/2/member/self/?access_token={access_token}"
     const remoteUser = await getUser({ access_token });
 
-    const groups = await prisma.groups();
+    console.log({ remoteUser });
 
-    // Create necessary groups
-    // TODO: Fix this ugly hack, default Groups must exist via seeding and other groups should exist via some other workflow
-    await Promise.all(
-      DEFAULT_GROUPS.map(async group => {
-        const existingGroup = groups.some(
-          g => g.id === group.groupId.toString()
-        );
-        if (!existingGroup) {
-          const newGroup = await prisma.createGroup({
-            id: group.groupId
-          });
-          console.log(`Created a new group: ${group.groupId}`);
-        }
-      })
-    );
+    const groups = await photon.groups();
 
-    // TODO: If a user have a valid access token already! Don't do this!
-    const user = await prisma.upsertUser({
-      where: {
-        meetup_id: remoteUser.id.toString()
-      },
-      create: {
-        access_token,
-        refresh_token,
-        meetup_id: remoteUser.id.toString(),
-        groups: {
-          connect: DEFAULT_GROUPS.map(group => {
-            return {
-              id: group.groupId.toString()
-            };
-          })
+    console.log({ groups });
+
+    try {
+      // Create necessary groups
+      // TODO: Fix this ugly hack, default Groups must exist via seeding and other groups should exist via some other workflow
+      await Promise.all(
+        DEFAULT_GROUPS.map(async group => {
+          const existingGroup = groups.some(g => g.id === group.groupId);
+          if (!existingGroup) {
+            const newGroup = await photon.groups.create({
+              data: {
+                id: group.groupId
+              }
+            });
+
+            console.log(`Created a new group: ${newGroup.id}`);
+          }
+        })
+      );
+    } catch (e) {
+      console.log("Failed to create missing groups");
+      console.error(e);
+    }
+
+    const oneGroup = DEFAULT_GROUPS.find(group => Boolean(group.groupId));
+
+    console.log({ oneGroup });
+
+    let user = null;
+    try {
+      user = await photon.users.upsert({
+        where: {
+          meetup_id: remoteUser.id.toString()
+        },
+        create: {
+          access_token,
+          refresh_token,
+          meetup_id: remoteUser.id.toString(),
+          groups: {
+            connect: {
+              id: oneGroup.groupId
+            }
+          }
+        },
+        update: {
+          access_token,
+          refresh_token
         }
-      },
-      update: {
-        access_token,
-        refresh_token
-      }
-    });
+      });
+
+      console.log({ user });
+    } catch (e) {
+      console.log("Failed to create user");
+      console.error(e);
+    }
+
+    await photon.close();
 
     callback(null, {
       statusCode: 200,

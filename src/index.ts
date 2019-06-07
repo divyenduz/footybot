@@ -1,7 +1,8 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-import { prisma } from "./generated/prisma-client";
+import { Photon } from "@generated/photon";
+
 import {
   getUpcomingEventsWithoutRSVP,
   performRSVP,
@@ -24,32 +25,40 @@ interface User {
   groups: Group[];
 }
 
+const photon = new Photon();
+
 export async function main() {
   //TODO: Add user/group and what not batching later. Re-architect this system for scalability
 
-  const users = await prisma.users().$fragment<User[]>(`{
-    id
-    email
-    meetup_id
-    access_token
-    refresh_token
-    groups {
-      id
+  const users = await photon.users({
+    select: {
+      id: true,
+      email: true,
+      meetup_id: true,
+      access_token: true,
+      refresh_token: true,
+      groups: {
+        select: {
+          id: true
+        }
+      }
     }
-  }`);
+  });
 
   // TODO: Make this less nested shit
   // TODO: Collect responses to share back with user about which event was a success and which was a failure
   // TODO: Send 1 email in place of N mails for each success failure
   users.forEach(async user => {
     // Test and if needed, refresh access_token, if refresh fails, notify user to re-login
-    const meetupUser = await getUser({ access_token: user.access_token });
+    const meetupUser = await getUser({
+      access_token: user.access_token
+    });
     if (!meetupUser) {
       const { access_token, refresh_token } = await refreshAccessToken({
         refresh_token: user.refresh_token
       });
 
-      const updatedUser = await prisma.updateUser({
+      const updatedUser = await photon.users.update({
         where: {
           id: user.id
         },
@@ -102,5 +111,7 @@ export async function main() {
 }
 
 if (require.main === module) {
-  main();
+  main().finally(async () => {
+    await photon.close();
+  });
 }
