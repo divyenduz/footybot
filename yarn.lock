@@ -298,10 +298,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@prisma/prototype@^0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@prisma/prototype/-/prototype-0.0.25.tgz#8c151058ef59d7b33bb3c1d3fdf7c5be50ccd364"
-  integrity sha512-BCZM5i7RJzLe8Ewh/FJTDTpM5AqnTz91mADnnqnoeW8UB+6hnU32O1caGCs4P84cQnQOP9uXv0wRw1pzbUbPqQ==
+"@prisma/prototype@^0.0.26":
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/@prisma/prototype/-/prototype-0.0.26.tgz#7460877085603bd485628e58e5cc851ee962f6bd"
+  integrity sha512-1lMm/Xt0toUEj11ARGSZRyxS5EWDpaW6arzo4Gang8k/hbutRtEmTFuoBn9vG5Dz2kdOkveuaF3GQ5dSFCfA8w==
 
 "@sendgrid/client@^6.4.0":
   version "6.4.0"
