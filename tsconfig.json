@@ -2,6 +2,7 @@
   "compilerOptions": {
     "lib": ["esnext", "dom"],
     "outDir": "dist/",
-    "strict": false
+    "strict": false,
+    "noUnusedLocals": true
   }
 }

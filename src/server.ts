@@ -23,7 +23,6 @@ module.exports.index = (event, ctx, callback) => {
 };
 
 module.exports.callback = async (event, ctx, callback) => {
-  console.log("ZEBRA");
   if (event.httpMethod === "GET") {
     const { code, state } = event.queryStringParameters;
 
@@ -49,7 +48,7 @@ module.exports.callback = async (event, ctx, callback) => {
 
     console.log({ remoteUser });
 
-    const groups = await photon.groups();
+    const groups = await photon.entities();
 
     console.log({ groups });
 
@@ -60,9 +59,9 @@ module.exports.callback = async (event, ctx, callback) => {
         DEFAULT_GROUPS.map(async group => {
           const existingGroup = groups.some(g => g.id === group.groupId);
           if (!existingGroup) {
-            const newGroup = await photon.groups.create({
+            const newGroup = await photon.entities.create({
               data: {
-                id: group.groupId
+                meetup_id: group.groupId.toString()
               }
             });
 

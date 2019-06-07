@@ -12,19 +12,6 @@ import {
 } from "./meetup";
 import { sendMail } from "./mail";
 
-interface Group {
-  id: string;
-}
-
-interface User {
-  id: string;
-  email: string;
-  meetup_id: string;
-  access_token: string;
-  refresh_token: string;
-  groups: Group[];
-}
-
 const photon = new Photon();
 
 export async function main() {

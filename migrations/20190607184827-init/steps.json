@@ -8,7 +8,7 @@
     },
     {
       "stepType": "CreateModel",
-      "name": "Group",
+      "name": "Entity",
       "embedded": false
     },
     {
@@ -51,9 +51,9 @@
       "name": "groups",
       "type": {
         "Relation": {
-          "to": "Group",
+          "to": "Entity",
           "to_fields": [],
-          "name": "GroupToUser",
+          "name": "EntityToUser",
           "on_delete": "None"
         }
       },
@@ -82,7 +82,7 @@
     },
     {
       "stepType": "CreateField",
-      "model": "Group",
+      "model": "Entity",
       "name": "id",
       "type": {
         "Base": "Int"
@@ -96,7 +96,7 @@
     },
     {
       "stepType": "CreateField",
-      "model": "Group",
+      "model": "Entity",
       "name": "meetup_id",
       "type": {
         "Base": "String"
@@ -106,7 +106,7 @@
     },
     {
       "stepType": "CreateField",
-      "model": "Group",
+      "model": "Entity",
       "name": "user",
       "type": {
         "Relation": {
@@ -114,7 +114,7 @@
           "to_fields": [
             "id"
           ],
-          "name": "GroupToUser",
+          "name": "EntityToUser",
           "on_delete": "None"
         }
       },
