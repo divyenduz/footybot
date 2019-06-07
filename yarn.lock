@@ -285,6 +285,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
+"@prisma/prototype@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@prisma/prototype/-/prototype-0.0.18.tgz#9c7f88de5170a3495124f48ee77194269908e82c"
+  integrity sha512-YUDFKh9LgBW3gG5sGswcNCHGKiKF3KFn9NBaY5t70iCeEhNWbOsDe1PldT6z+Ai6wtjSZiTItN9CxuEqxD+/Ng==
+
 "@sendgrid/client@^6.4.0":
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/@sendgrid/client/-/client-6.4.0.tgz#d58df30adea5d7d09e747e2b61f9f859deeda798"
