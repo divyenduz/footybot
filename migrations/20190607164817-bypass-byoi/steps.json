@@ -1,0 +1,15 @@
+{
+  "version": "0.0.18",
+  "steps": [
+    {
+      "stepType": "CreateField",
+      "model": "Group",
+      "name": "meetup_id",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": false
+    }
+  ]
+}
