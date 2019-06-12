@@ -17,7 +17,7 @@
     "serverless-offline": "4.10.3"
   },
   "devDependencies": {
-    "@prisma/prototype": "^0.0.26",
+    "@prisma/prototype": "^0.0.30",
     "@types/dotenv": "6.1.1",
     "@types/graphql": "14.2.0",
     "@types/jest": "24.0.13",

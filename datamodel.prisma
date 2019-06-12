@@ -1,10 +1,20 @@
+datasource database {
+  provider = "sqlite"
+  url = "file:migration_engine.db"
+}
+
+generator photon {
+  provider = "typescript"
+  output = "node_modules/@generated/photon"
+}
+
 model User {
-  id: Int @id
-  email: String? @unique # Meetup doesn't provide email. We need to provide user another way to do this
-  meetup_id: String @unique # Using this to find uniques since email is not available
-  groups: Entity[]
-  access_token: String?
-  refresh_token: String?
+  id Int @id
+  email String? @unique # Meetup doesn't provide email. We need to provide user another way to do this
+  meetup_id String @unique # Using this to find uniques since email is not available
+  groups Entity[]
+  access_token String?
+  refresh_token String?
 }
 
 enum Provider {
@@ -12,6 +22,6 @@ enum Provider {
 }
 
 model Entity {
-  id: Int @id
-  meetup_id: String
+  id Int @id
+  meetup_id String
 }
