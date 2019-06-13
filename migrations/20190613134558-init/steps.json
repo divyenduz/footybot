@@ -1,0 +1,132 @@
+{
+  "version": "0.0.43",
+  "steps": [
+    {
+      "stepType": "CreateModel",
+      "name": "User",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateModel",
+      "name": "Entity",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "name": "id",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "name": "email",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "optional",
+      "isUnique": true
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "name": "meetup_id",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": true
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "name": "groups",
+      "type": {
+        "Relation": {
+          "to": "Entity",
+          "to_fields": [],
+          "name": "EntityToUser",
+          "on_delete": "None"
+        }
+      },
+      "arity": "list",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "name": "access_token",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "name": "refresh_token",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Entity",
+      "name": "id",
+      "type": {
+        "Base": "Int"
+      },
+      "arity": "required",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Entity",
+      "name": "meetup_id",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Entity",
+      "name": "user",
+      "type": {
+        "Relation": {
+          "to": "User",
+          "to_fields": [
+            "id"
+          ],
+          "name": "EntityToUser",
+          "on_delete": "None"
+        }
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateEnum",
+      "name": "Provider",
+      "values": [
+        "MEETUP"
+      ]
+    }
+  ]
+}

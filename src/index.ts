@@ -63,12 +63,14 @@ export async function main() {
     groups.forEach(async group => {
       const events = await getUpcomingEventsWithoutRSVP({
         access_token: user.access_token,
-        groupId: group.id
+        groupId: group.meetup_id
       });
       if (events.length === 0) {
-        console.log(`Group: ${group.id} has no new events`);
+        console.log(`Group: ${group.meetup_id} has no new events`);
       } else {
-        console.log(`Group: ${group.id} has ${events.length} sliced events`);
+        console.log(
+          `Group: ${group.meetup_id} has ${events.length} sliced events`
+        );
       }
       events.forEach(async event => {
         const { RSVPId, eventURL } = await performRSVP({
@@ -99,6 +101,6 @@ export async function main() {
 
 if (require.main === module) {
   main().finally(async () => {
-    await photon.close();
+    await photon.disconnect();
   });
 }

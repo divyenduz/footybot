@@ -23,5 +23,5 @@ enum Provider {
 
 model Entity {
   id Int @id
-  meetup_id String @unique
+  meetup_id String
 }

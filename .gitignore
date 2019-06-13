@@ -4,3 +4,4 @@ dist/
 .env.production
 .serverless
 db
+migration_engine.db

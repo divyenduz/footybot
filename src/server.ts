@@ -57,7 +57,9 @@ module.exports.callback = async (event, ctx, callback) => {
       // TODO: Fix this ugly hack, default Groups must exist via seeding and other groups should exist via some other workflow
       await Promise.all(
         DEFAULT_GROUPS.map(async group => {
-          const existingGroup = groups.some(g => g.id === group.groupId);
+          const existingGroup = groups.some(
+            g => parseInt(g.meetup_id) === parseInt(group.groupId.toString())
+          );
           if (!existingGroup) {
             const newGroup = await photon.entities.create({
               data: {
@@ -75,8 +77,14 @@ module.exports.callback = async (event, ctx, callback) => {
     }
 
     const oneGroup = DEFAULT_GROUPS.find(group => Boolean(group.groupId));
-
     console.log({ oneGroup });
+
+    const thisGroup = await photon.entities({
+      where: {
+        id: oneGroup.groupId
+      }
+    });
+    console.log({ thisGroup });
 
     let user = null;
     try {
@@ -90,7 +98,7 @@ module.exports.callback = async (event, ctx, callback) => {
           meetup_id: remoteUser.id.toString(),
           groups: {
             connect: {
-              id: oneGroup.groupId
+              meetup_id: oneGroup.groupId.toString()
             }
           }
         },
@@ -106,7 +114,7 @@ module.exports.callback = async (event, ctx, callback) => {
       console.error(e);
     }
 
-    await photon.close();
+    await photon.disconnect();
 
     callback(null, {
       statusCode: 200,
