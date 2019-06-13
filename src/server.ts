@@ -79,13 +79,6 @@ module.exports.callback = async (event, ctx, callback) => {
     const oneGroup = DEFAULT_GROUPS.find(group => Boolean(group.groupId));
     console.log({ oneGroup });
 
-    const thisGroup = await photon.entities({
-      where: {
-        id: oneGroup.groupId
-      }
-    });
-    console.log({ thisGroup });
-
     let user = null;
     try {
       user = await photon.users.upsert({
