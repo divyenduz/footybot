@@ -31,7 +31,7 @@
     "x": "ts-node src/index.ts",
     "pre-deploy": "tsc",
     "deploy": "yarn && yarn pre-deploy && prisma deploy -e .env",
-    "deploy-production": "yarn && yarn pre-deploy && NODE_ENV=production sls deploy --stage production && prisma deploy -e .env.production",
+    "deploy-production": "yarn && yarn pre-deploy && prisma deploy -e .env.production && NODE_ENV=production sls deploy --stage production",
     "watch": "tsc -w",
     "build": "tsc",
     "offline": "sls offline"
