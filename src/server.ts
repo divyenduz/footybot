@@ -97,7 +97,6 @@ module.exports.callback = async (event, ctx, callback) => {
       console.log(e)
       throw e
     }
-    return
   }
   throw new Error('Method not allowed')
 }
