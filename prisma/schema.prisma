@@ -1,0 +1,22 @@
+datasource ds {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+generator photon {
+  provider      = "photonjs"
+  binaryTargets = ["darwin", "rhel-openssl-1.0.x"]
+}
+
+model User {
+  id            String  @default(cuid()) @id
+  email         String? @unique
+  meetup_id     String  @unique
+  access_token  String
+  refresh_token String
+  groups        Group[]
+}
+
+model Group {
+  id String @default(cuid()) @id
+}
