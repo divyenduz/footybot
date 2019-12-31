@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@prisma/photon": "2.0.0-preview019",
     "@sendgrid/mail": "6.4.0",
     "@types/express": "4.16.1",
     "@types/node-fetch": "2.3.3",
@@ -12,7 +13,6 @@
     "graphql": "14.3.0",
     "node-fetch": "2.5.0",
     "open": "6.2.0",
-    "prisma-client-lib": "1.33.0",
     "serverless-dotenv-plugin": "2.1.1",
     "serverless-offline": "4.10.3"
   },
@@ -22,16 +22,16 @@
     "@types/jest": "24.0.13",
     "@types/node": "12.0.0",
     "jest": "24.8.0",
+    "prisma2": "2.0.0-preview019",
     "serverless": "1.42.3",
     "ts-jest": "24.0.2",
     "ts-node": "8.1.0",
-    "typescript": "3.4.5"
+    "typescript": "3.7.4"
   },
   "scripts": {
     "x": "ts-node src/index.ts",
     "pre-deploy": "tsc",
-    "deploy": "yarn && yarn pre-deploy && prisma deploy -e .env",
-    "deploy-production": "yarn && yarn pre-deploy && prisma deploy -e .env.production && NODE_ENV=production sls deploy --stage production",
+    "deploy-production": "yarn && yarn pre-deploy && yarn prisma2 generate && DB_URL=$(cat .env.production | grep DB_URL | cut -d '=' -f 2) yarn prisma2 lift up --auto-approve && NODE_ENV=production sls deploy --stage production --aws-profile zoid",
     "watch": "tsc -w",
     "build": "tsc",
     "offline": "sls offline"
