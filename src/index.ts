@@ -11,7 +11,7 @@ import {
 } from './meetup'
 import { sendMail } from './mail'
 
-const photon = new Photon()
+export const photon = new Photon()
 
 export async function main() {
   //TODO: Add user/group and what not batching later. Re-architect this system for scalability

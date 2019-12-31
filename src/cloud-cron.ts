@@ -1,7 +1,7 @@
-import { main } from './index'
+import { main, photon } from './index'
 
 module.exports.run = (event: any, context: any, callback: any) => {
-  main()
+  main().finally(() => photon.disconnect())
 
   let response = {
     statusCode: 200,
