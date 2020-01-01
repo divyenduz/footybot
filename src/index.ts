@@ -14,8 +14,9 @@ import { sendMail } from './mail'
 export const photon = new Photon()
 
 export async function main() {
-  //TODO: Add user/group and what not batching later. Re-architect this system for scalability
+  await photon.connect()
 
+  //TODO: Add user/group and what not batching later. Re-architect this system for scalability
   const users = await photon.users.findMany({
     select: {
       id: true,

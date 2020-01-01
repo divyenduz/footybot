@@ -37,6 +37,8 @@ module.exports.callback = async (event, ctx, callback) => {
     }
 
     try {
+      await photon.connect()
+
       const { access_token, refresh_token } = await getAccessToken({ code })
 
       // TODO: Handle the case when we fail to get remote user for whatever reason
