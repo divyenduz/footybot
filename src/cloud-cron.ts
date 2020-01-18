@@ -1,7 +1,7 @@
 import { main, photon } from './index'
 
-module.exports.run = (event: any, context: any, callback: any) => {
-  main().finally(() => photon.disconnect())
+module.exports.run = async (event: any, context: any, callback: any) => {
+  await main()
 
   let response = {
     statusCode: 200,
@@ -9,5 +9,5 @@ module.exports.run = (event: any, context: any, callback: any) => {
       message: 'Unleashing Footyboy on meetup.',
     }),
   }
-  callback(null, response)
+  return response
 }
