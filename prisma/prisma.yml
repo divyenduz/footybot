@@ -1,8 +1,0 @@
-endpoint: https://api-prisma.divyendusingh.com/footyboy/${env:STAGE}
-datamodel: datamodel.prisma
-
-secret: ${env:PRISMA_SECRET}
-
-generate:
-  - generator: typescript-client
-    output: ../src/generated/prisma-client

@@ -3,11 +3,11 @@ dotenv.config()
 
 import { getOAuthURL, getAccessToken, getUser } from './meetup'
 import { sendMail } from './mail'
-import { Photon } from '@prisma/photon'
+import { PrismaClient } from '@prisma/client'
 
 import { DEFAULT_GROUPS } from './constants'
 
-const photon = new Photon()
+const prisma = new PrismaClient()
 
 module.exports.index = (event, ctx, callback) => {
   if (event.httpMethod === 'GET') {
@@ -37,7 +37,7 @@ module.exports.callback = async (event, ctx, callback) => {
     }
 
     try {
-      await photon.connect()
+      await prisma.$connect()
 
       const { access_token, refresh_token } = await getAccessToken({ code })
 
@@ -46,18 +46,18 @@ module.exports.callback = async (event, ctx, callback) => {
       const remoteUser = await getUser({ access_token })
       console.log({ remoteUser })
 
-      const groups = await photon.groups.findMany()
+      const groups = await prisma.group.findMany()
       console.log({ groups })
 
       // Create necessary groups
       // TODO: Fix this ugly hack, default Groups must exist via seeding and other groups should exist via some other workflow
       await Promise.all(
-        DEFAULT_GROUPS.map(async group => {
+        DEFAULT_GROUPS.map(async (group) => {
           const existingGroup = groups.some(
-            g => g.id === group.groupId.toString(),
+            (g) => g.id === group.groupId.toString(),
           )
           if (!existingGroup) {
-            const newGroup = await photon.groups.create({
+            const newGroup = await prisma.group.create({
               data: {
                 id: group.groupId,
               },
@@ -68,7 +68,7 @@ module.exports.callback = async (event, ctx, callback) => {
       )
 
       // TODO: If a user have a valid access token already! Don't do this!
-      const user = await photon.users.upsert({
+      const user = await prisma.user.upsert({
         where: {
           meetup_id: remoteUser.id.toString(),
         },
@@ -76,8 +76,8 @@ module.exports.callback = async (event, ctx, callback) => {
           access_token,
           refresh_token,
           meetup_id: remoteUser.id.toString(),
-          groups: {
-            connect: DEFAULT_GROUPS.map(group => {
+          Group: {
+            connect: DEFAULT_GROUPS.map((group) => {
               return {
                 id: group.groupId.toString(),
               }

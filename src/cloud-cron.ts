@@ -1,4 +1,4 @@
-import { main, photon } from './index'
+import { main } from './index'
 
 module.exports.run = async (event: any, context: any, callback: any) => {
   await main()

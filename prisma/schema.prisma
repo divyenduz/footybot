@@ -1,22 +1,36 @@
+generator prisma_client_js {
+  provider      = "prisma-client-js"
+  binaryTargets = ["darwin", "rhel-openssl-1.0.x"]
+}
+
 datasource ds {
   provider = "mysql"
   url      = env("DB_URL")
 }
 
-generator photon {
-  provider      = "photonjs"
-  binaryTargets = ["darwin", "rhel-openssl-1.0.x"]
+enum EventMetaStatus {
+  BLOCKED
 }
 
-model User {
-  id            String  @default(cuid()) @id
-  email         String? @unique
-  meetup_id     String  @unique
-  access_token  String
-  refresh_token String
-  groups        Group[]
+model EventMeta {
+  id     String @id
+  reason String @default("")
+  status EventMetaStatus @default(BLOCKED)
 }
 
 model Group {
-  id String @default(cuid()) @id
+  id   String  @id
+  user String?
+  User User?   @relation(fields: [user], references: [id])
+
+  @@index([user], name: "user")
+}
+
+model User {
+  id            String  @id @default(cuid())
+  email         String? @unique
+  access_token  String  @default("")
+  refresh_token String  @default("")
+  meetup_id     String  @default("") @unique
+  Group         Group[]
 }
