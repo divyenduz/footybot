@@ -69,9 +69,16 @@ export async function getUser({ access_token }) {
       Authorization: `Bearer ${access_token}`,
     },
   })
-  const selfData = await self.json()
+  let selfData = {}
+  try {
+    selfData = JSON.parse(await self.text())
+  } catch (e) {
+    console.log(e)
+  }
+  //@ts-ignore
   if (selfData.id) {
     return {
+      //@ts-ignore
       id: selfData.id,
     }
   } else {

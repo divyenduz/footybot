@@ -44,6 +44,7 @@ export async function main() {
   for (let user of users) {
     // Test and if needed, refresh access_token, if refresh fails, notify user to re-login
     const meetupUser = await getUser({ access_token: user.access_token })
+    console.log({ meetupUser })
     if (!meetupUser) {
       const { access_token, refresh_token } = await refreshAccessToken({
         refresh_token: user.refresh_token,
@@ -101,7 +102,7 @@ export async function main() {
           await prisma.eventMeta.create({
             data: {
               id: event.id,
-              reason: error,
+              reason: `${response}: ${error}`,
               status: 'BLOCKED',
             },
           })
