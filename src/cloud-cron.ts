@@ -6,7 +6,7 @@ module.exports.run = async (event: any, context: any, callback: any) => {
   let response = {
     statusCode: 200,
     body: JSON.stringify({
-      message: 'Unleashing Footyboy on meetup.',
+      message: 'Unleashing Footybot on meetup.',
     }),
   }
   return response

@@ -15,7 +15,7 @@ functions:
     handler: dist/cloud-cron.run
     events:
       - http: GET /run
-      - schedule: rate(5 minutes)
+      - schedule: rate(1 minute)
   server:
     handler: dist/server.index
     events:

@@ -87,17 +87,27 @@ export async function main() {
             },
           })
         ).map((event) => event.id)
+
         if (blockedEvents.includes(event.id)) {
           console.log(`The eventId ${event.id} is blocked`)
           return
         }
 
-        const { RSVPId, eventURL, response, error } = await performRSVP({
+        const { RSVPId, eventURL, response, error, code } = await performRSVP({
           access_token: user.access_token,
           eventId: event.id,
         })
 
-        if (RSVPId === null) {
+        console.log({ RSVPId, eventURL, response, error, code })
+
+        if (code === 'too_few_spots') {
+          console.log(
+            `eventId: ${event.id} RSVP failed with code ${code}. Probably the meetup hasn't opened yet.`,
+          )
+          return
+        }
+
+        if (RSVPId === null && Boolean(error)) {
           console.log(`eventId: ${event.id} RSVP failed with error ${error}`)
           await prisma.eventMeta.create({
             data: {
@@ -107,6 +117,15 @@ export async function main() {
             },
           })
           return
+        } else {
+          console.log(`eventId: ${event.id} RSVP failed with error ${error}`)
+          await prisma.eventMeta.create({
+            data: {
+              id: event.id,
+              reason: `${response}: ${error}`,
+              status: 'LOGGED',
+            },
+          })
         }
 
         console.log('Event:', { user })

@@ -10,11 +10,12 @@ datasource ds {
 
 enum EventMetaStatus {
   BLOCKED
+  LOGGED
 }
 
 model EventMeta {
-  id     String @id
-  reason String @default("")
+  id     String          @id
+  reason String          @default("")
   status EventMetaStatus @default(BLOCKED)
 }
 

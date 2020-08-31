@@ -1,4 +1,5 @@
 export const DEFAULT_GROUPS = [
+  // INSERT INTO `Group` (`id`, `user`) VALUES ('29870797', 'ckei6ctel0000ds1mhqilch5u');
   ...(process.env.NODE_ENV === 'development'
     ? [
         {
@@ -7,7 +8,7 @@ export const DEFAULT_GROUPS = [
         },
       ]
     : []),
-
+  // INSERT INTO `Group` (`id`, `user`) VALUES ('19679886', 'ckei6ctel0000ds1mhqilch5u');
   ...(process.env.NODE_ENV === 'production'
     ? [
         {

@@ -157,6 +157,8 @@ export async function performRSVP({ access_token, eventId }) {
       response: rsvpData.response,
       //@ts-ignore
       error: rsvpData.problem,
+      //@ts-ignore
+      code: rsvpData.code,
     }
   }
 
@@ -171,5 +173,7 @@ export async function performRSVP({ access_token, eventId }) {
     //@ts-ignore
     response: rsvpData.response,
     error: null,
+    //@ts-ignore
+    code: rsvpData.code,
   }
 }
