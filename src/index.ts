@@ -64,14 +64,30 @@ export async function main() {
       console.log(`Token for user ${updatedUser.id} refreshed`)
     }
 
+    const sleep = (seconds: number) => {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1000)
+      })
+    }
+
     const groups = user.Group
     for await (let group of groups) {
-      const events = await getUpcomingEventsWithoutRSVP({
-        access_token: user.access_token,
-        groupId: group.id,
-      })
+      let events = []
+      for (let i = 0; i <= 2; i++) {
+        events = await getUpcomingEventsWithoutRSVP({
+          access_token: user.access_token,
+          groupId: group.id,
+        })
+        if (events.length === 0) {
+          console.log(
+            `Group: ${group.id} has no new events. Sleeping for 20 seconds and trying again.`,
+          )
+          await sleep(20)
+        }
+      }
+
       if (events.length === 0) {
-        console.log(`Group: ${group.id} has no new events`)
+        console.log(`Group: ${group.id} has no new events.`)
       } else {
         console.log(`Group: ${group.id} has ${events.length} sliced events`)
       }
@@ -93,11 +109,30 @@ export async function main() {
           return
         }
 
-        const { RSVPId, eventURL, response, error, code } = await performRSVP({
-          access_token: user.access_token,
-          eventId: event.id,
-        })
+        let performRSVPResponse = {
+          RSVPId: null,
+          eventURL: null,
+          response: null,
+          error: null,
+          code: null,
+        }
 
+        for (let i = 0; i <= 2; i++) {
+          let { RSVPId, eventURL, response, error, code } = await performRSVP({
+            access_token: user.access_token,
+            eventId: event.id,
+          })
+          if (RSVPId === null || code === 'too_few_spots') {
+            console.log(
+              `eventId: ${event.id} RSVP failed with code ${code}. Probably the meetup hasn't opened yet. Sleeping for 20 seconds and trying again.`,
+            )
+            await sleep(20)
+          } else {
+            performRSVPResponse = { RSVPId, eventURL, response, error, code }
+          }
+        }
+
+        const { RSVPId, eventURL, response, error, code } = performRSVPResponse
         console.log({ RSVPId, eventURL, response, error, code })
 
         if (code === 'too_few_spots') {

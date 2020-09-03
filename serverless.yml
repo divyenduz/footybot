@@ -1,6 +1,6 @@
-service: footyboy
+service: footybot
 
-frameworkVersion: "=1.42.3"
+frameworkVersion: '=1.42.3'
 
 provider:
   name: aws
