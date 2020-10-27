@@ -46,3 +46,25 @@ Use `/` and then `/run`. Deployment sets up `/run` to be called every 5 minutes 
 ### Scope
 
 I made this for this one purpose, but with little modifications, this can be turned into a social media automator. I will most likely stop the development of this project now for any foreseeable time.
+
+### Docker
+
+```
+aws ecr get-login-password --region ap-southeast-1 --profile zoid  | docker login --username AWS --password-stdin 297907245068.dkr.ecr.ap-southeast-1.amazonaws.com
+```
+
+```
+docker build .
+```
+
+```
+docker tag footybot:latest 297907245068.dkr.ecr.ap-southeast-1.amazonaws.com/footybot:latest
+```
+
+```
+docker push 297907245068.dkr.ecr.ap-southeast-1.amazonaws.com/footybot:latest
+```
+
+```
+docker run -p 3000:3000 --env-file ./.env.local.docker footybot:latest
+```

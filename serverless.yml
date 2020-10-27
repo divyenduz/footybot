@@ -24,3 +24,7 @@ functions:
     handler: dist/server.callback
     events:
       - http: GET /callback
+
+custom:
+  serverless-offline:
+    host: '0.0.0.0'

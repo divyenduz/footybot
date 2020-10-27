@@ -1,6 +1,6 @@
 generator prisma_client_js {
   provider      = "prisma-client-js"
-  binaryTargets = ["darwin", "rhel-openssl-1.0.x"]
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource ds {
@@ -32,6 +32,6 @@ model User {
   email         String? @unique
   access_token  String  @default("")
   refresh_token String  @default("")
-  meetup_id     String  @default("") @unique
+  meetup_id     String  @unique @default("")
   Group         Group[]
 }

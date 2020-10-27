@@ -286,15 +286,15 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@prisma/cli@2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.6.1.tgz#f10460bcd258957f326121abf27c0cbee3b1f264"
-  integrity sha512-xRFSVPwyUIvKaiQs00vVnv4kB3Po4kCA1aNjLaDNgn+k99RRasULQsGvt1nPrilIeFedii7Fn9nDyHixzw6llg==
+"@prisma/cli@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.9.0.tgz#c6f6652890783b899f266537e90e69c3481f5474"
+  integrity sha512-wPk4ehyTtVM7ZarWs16MhOc6kwLV/gZFardMvUeh46rlBwrklMdKtNChzzPa3wurrUPQ5KTbuRBz5Mgf7AdD/w==
 
-"@prisma/client@2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-2.6.1.tgz#a68142fb878f040217cf0a348e1d81d7d103dcf8"
-  integrity sha512-voolWUPCFiFjrnErft9LjksQMgkVbxqD5lx6s7FoJ/qvguN9BPGyRG/Bwpy8v5yz6THgIoHsbHE2hJ0CMBzJFA==
+"@prisma/client@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-2.9.0.tgz#acfaca0c5695d7f439e5af54b7cd0f7fb5926340"
+  integrity sha512-VLXw6s13xakIrV9Z8Ftw0j+mbXuvbRkxYv3X5hRZdPN1NAwgeXJmrrTK9MS2HDvW8eGZL7P8OaUSNQ3Sfgvr/Q==
   dependencies:
     pkg-up "^3.1.0"
 
