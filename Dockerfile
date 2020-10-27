@@ -6,4 +6,4 @@ RUN yarn build
 RUN yarn prisma generate
 USER node
 EXPOSE 3000
-CMD [ "yarn", "offline" ]
+CMD [ "yarn", "offline", "--noTimeout" ]

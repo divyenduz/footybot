@@ -6,24 +6,24 @@ import { sendMail } from './mail'
 import { PrismaClient } from '@prisma/client'
 
 import { DEFAULT_GROUPS } from './constants'
+import { main } from '.'
 
 const prisma = new PrismaClient()
 
-module.exports.index = (event, ctx, callback) => {
+module.exports.index = async (event) => {
   if (event.httpMethod === 'GET') {
-    callback(null, {
+    return {
       statusCode: 200,
       headers: {
         'Content-Type': 'text/html',
       },
       body: `<a href='${getOAuthURL()}'>Login with Meetup</a>`,
-    })
-    return
+    }
   }
   throw new Error('Method not allowed')
 }
 
-module.exports.callback = async (event, ctx, callback) => {
+module.exports.callback = async (event) => {
   if (event.httpMethod === 'GET') {
     const { code, state } = event.queryStringParameters
     if (state) {
@@ -99,6 +99,14 @@ module.exports.callback = async (event, ctx, callback) => {
       console.log(e)
       throw e
     }
+  }
+  throw new Error('Method not allowed')
+}
+
+module.exports['rsvp'] = async (event) => {
+  if (event.httpMethod === 'GET') {
+    await main()
+    return ''
   }
   throw new Error('Method not allowed')
 }

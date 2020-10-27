@@ -37,7 +37,6 @@ export async function main() {
     )
   }
 
-  // TODO: Make this less nested shit
   // TODO: Collect responses to share back with user about which event was a success and which was a failure
   // TODO: Send 1 email in place of N mails for each success failure
 

@@ -24,6 +24,10 @@ functions:
     handler: dist/server.callback
     events:
       - http: GET /callback
+  rsvp:
+    handler: dist/server.rsvp
+    events:
+      - http: GET /rsvp
 
 custom:
   serverless-offline:

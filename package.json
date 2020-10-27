@@ -35,7 +35,7 @@
     "watch": "tsc -w",
     "build": "tsc",
     "offline": "sls offline",
-    "dev": "yarn offline",
+    "dev": "yarn offline --noTimeout",
     "server": "yarn offline"
   }
 }
