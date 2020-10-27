@@ -4,3 +4,4 @@ dist/
 .env.production
 .env.local.docker
 .serverless
+k8s/
