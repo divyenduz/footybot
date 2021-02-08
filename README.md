@@ -54,7 +54,7 @@ aws ecr get-login-password --region ap-southeast-1 --profile zoid  | docker logi
 ```
 
 ```
-docker build .
+docker build . -t footybot
 ```
 
 ```

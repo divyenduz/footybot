@@ -1,16 +1,11 @@
 generator prisma_client_js {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  binaryTargets = ["native"]
 }
 
 datasource ds {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DB_URL")
-}
-
-enum EventMetaStatus {
-  BLOCKED
-  LOGGED
 }
 
 model EventMeta {
@@ -34,4 +29,9 @@ model User {
   refresh_token String  @default("")
   meetup_id     String  @unique @default("")
   Group         Group[]
+}
+
+enum EventMetaStatus {
+  BLOCKED
+  LOGGED
 }
