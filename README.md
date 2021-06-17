@@ -10,9 +10,6 @@ Bot to help me RSVP on a specific Football meetup group.
 
 A man just wants to play football.
 
-- https://twitter.com/divyenduz/status/1116989929823842305
-- https://twitter.com/divyenduz/status/1119277075708432384
-
 Detailed why here: https://divu.in/automation-64b49e8bfcb8
 
 ### Development/Deployment
