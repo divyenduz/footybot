@@ -5,3 +5,5 @@ dist/
 .env.local.docker
 .serverless
 k8s/
+.DS_Store
+
