@@ -7,3 +7,4 @@ dist/
 k8s/
 .DS_Store
 
+.next

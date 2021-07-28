@@ -1,9 +1,13 @@
-FROM node:12.18.4
+FROM node:16-alpine3.13
+
+RUN mkdir -p /app
 WORKDIR /app
-ADD . .
-RUN yarn
-RUN yarn build
-RUN yarn prisma generate
-USER node
+
+# copy source files
+COPY . /app
+
+# install dependencies
+RUN yarn install && yarn prisma generate && yarn build
+
 EXPOSE 3000
-CMD [ "yarn", "offline", "--noTimeout" ]
+CMD yarn start
